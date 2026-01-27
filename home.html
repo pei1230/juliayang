@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Your Name - Portfolio</title>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">Julia Yang</div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#" onclick="showSection('home')" class="active">Home</a></li>
+                <li><a href="#" onclick="showSection('about')">About</a></li>
+                <li><a href="#" onclick="showSection('work')">Work</a></li>
+            </ul>
+            <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+        </div>
+    </nav>
+
+    <!-- Home Section -->
+    <section id="home" class="active">
+        <div class="container">
+            <div class="profile-circle">JY</div>
+            <h1>Hello, I'm Julia Yang</h1>
+            <p class="subtitle">A data science student and web developer passionate about creating beautiful digital experiences through UI/UX design and data-driven solutions</p>
+            <div class="social-links">
+                <a href="https://github.com/pei1230" aria-label="GitHub">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                    </svg>
+                </a>
+                <a href="https://www.linkedin.com/in/julia-peirong-yang/" aria-label="LinkedIn">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                        <rect x="2" y="9" width="4" height="12"></rect>
+                        <circle cx="4" cy="4" r="2"></circle>
+                    </svg>
+                </a>
+                <a href="mailto:yangpeirang10140@gmail.com" aria-label="Email">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                        <polyline points="22,6 12,13 2,6"></polyline>
+                    </svg>
+                </a>
+            </div>
+            <button class="btn" onclick="showSection('work')">View My Work</button>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+        <div class="container">
+            <h2>About Me</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>I'm a Data Science student at the University of Washington with a passion for creating elegant solutions at the intersection of design and technology. With experience in brand identity design, web development, and data analysis, I specialize in building responsive and user-friendly digital experiences.</p>
+                    <p>My journey spans from researching quantum computing optimization algorithms in Tokyo to designing and launching websites for boutique hotels. I thrive on combining technical problem-solving with creative visual design to deliver impactful results.</p>
+                </div>
+                <div class="about-skills">
+                    <h3>Skills</h3>
+                    <div class="skills">
+                        <span class="skill-tag">Python</span>
+                        <span class="skill-tag">HTML & CSS</span>
+                        <span class="skill-tag">R</span>
+                        <span class="skill-tag">Java</span>
+                        <span class="skill-tag">UI/UX Design</span>
+                        <span class="skill-tag">Figma</span>
+                        <span class="skill-tag">WordPress</span>
+                        <span class="skill-tag">Data Analysis</span>
+                    </div>
+                    <h3>Education</h3>
+                    <div class="education">
+                        <p class="degree">B.S. in Informatics: Data Science</p>
+                        <p class="university">University of Washington, June 2027</p>
+                        <p class="degree" style="margin-top: 0.5rem;">Minor: Business Administration</p>
+                        <p class="university">GPA: 3.7/4.0 • Dean's List</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Work Section -->
+    <section id="work">
+        <div class="container">
+            <h2>My Work</h2>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&auto=format&fit=crop" alt="Almeria Hotel Website" class="project-image">
+                    <div class="project-content">
+                        <h3 class="project-title">Almeria Boutique Hotel</h3>
+                        <p class="project-description">Designed and launched a complete website for a 6-room boutique hotel, boosting customer base by 130% and attracting 5k+ visitors from domestic and international markets.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">Web Design</span>
+                            <span class="project-tag">UI/UX</span>
+                            <span class="project-tag">WordPress</span>
+                        </div>
+                        <a href="https://almeria.co.jp" target="_blank" class="project-link">
+                            View Project →
+                        </a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <img src="https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=800&auto=format&fit=crop" alt="TSP Optimization Research" class="project-image">
+                    <div class="project-content">
+                        <h3 class="project-title">TSP Optimization with Quantum Computing</h3>
+                        <p class="project-description">Implemented 2-opt and genetic algorithms in Python to solve the Traveling Salesman Problem using Tokyo's railway network data, analyzing convergence behavior and runtime efficiency.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">Python</span>
+                            <span class="project-tag">Algorithm Design</span>
+                            <span class="project-tag">Data Analysis</span>
+                        </div>
+                        <a href="#" class="project-link">
+                            View Project →
+                        </a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <img src="https://images.unsplash.com/photo-1626785774625-ddcddc3445e9?w=800&auto=format&fit=crop" alt="Diamond Design Corporate Site" class="project-image">
+                    <div class="project-content">
+                        <h3 class="project-title">Diamond Design Japan Corporate Website</h3>
+                        <p class="project-description">Leading design and development of corporate website to highlight services and brand values. Created 20+ logo iterations for minimal, modern brand identity.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">Brand Identity</span>
+                            <span class="project-tag">Web Development</span>
+                            <span class="project-tag">Figma</span>
+                        </div>
+                        <a href="#" class="project-link">
+                            View Project →
+                        </a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <img src="https://images.unsplash.com/photo-1611162616475-46b635cb6868?w=800&auto=format&fit=crop" alt="Social Media Marketing" class="project-image">
+                    <div class="project-content">
+                        <h3 class="project-title">UNITE UW Social Media Campaign</h3>
+                        <p class="project-description">Boosted program outreach by producing Instagram posts and weekly flyers for a student organization with 100+ members, capturing events and creating engaging visual content.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">Digital Marketing</span>
+                            <span class="project-tag">Photography</span>
+                            <span class="project-tag">Design</span>
+                        </div>
+                        <a href="#" class="project-link">
+                            View Project →
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>Let's work together</p>
+        <p class="copyright">© 2024 Julia Yang. All rights reserved.</p>
+    </footer>
+
+    <script>
+        function showSection(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Show selected section
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Update active nav link
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Close mobile menu
+            document.getElementById('navLinks').classList.remove('active');
+        }
+
+        function toggleMenu() {
+            document.getElementById('navLinks').classList.toggle('active');
+        }
+    </script>
+</body>
+</html>
