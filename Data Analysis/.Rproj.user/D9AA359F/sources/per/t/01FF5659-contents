@@ -1,0 +1,377 @@
+---
+title: "PS1"
+author: "Julia Yang"
+date: "2026-01-14"
+output: html_document
+---
+
+## 1 Clean election data
+
+### 1.1 Load and check
+
+#### 1.1.1 
+```{r}
+library(tidyverse)
+election <- read_delim("data/us-elections_2000-2024.csv.bz2")
+dim(election)
+
+election %>%
+  sample_n(5)
+```
+
+#### 1.1.2
+
+A row represents the result of one party in one county in a year.
+
+### 1.2 Fill missings
+
+#### 1.2.1
+
+```{r}
+election %>%
+  select(FIPS, county, year, income) %>%
+  slice(7293:7312) 
+```
+
+#### 1.2.2
+
+##### a)
+
+```{r}
+election %>%
+  arrange(FIPS, year) %>%
+  group_by(FIPS) %>%
+  tidyr::fill(income, .direction = "downup") %>%
+  ungroup() %>%
+  filter((county == "Kauai County" & year == 2024) | (county == "Maui County" & year == 2000)) %>%
+  select(FIPS, county, year, income)
+```
+
+
+##### b)
+- The missing income values are filled from the same county using the value adjacent years where income is observed.
+- Income is not averaged.
+
+##### c)
+//use most recent values
+```{r}
+election %>%
+  arrange(FIPS, year) %>%
+  group_by(FIPS) %>%
+  fill(income, .direction = "down") %>%
+  ungroup()
+```
+
+##### d)
+
+group_by() should be use before fill(), and fill() operates wihtin each group, hence, it won't fill in data from another county.
+
+##### e)
+
+The printout reveals that county is not a safe unique key because county name could be repetitive across states. Hence, FIPS is used to indentify each geographic units and this is why grouping and filling by FIPS is more reliable. 
+
+#### 1.2.3
+
+```{r}
+election_fill <- election %>%
+  arrange(FIPS, year) %>%
+  group_by(FIPS) %>%
+  tidyr::fill("income", "population", .direction = "downup") %>%
+  ungroup() 
+election_fill
+```
+
+#### 1.2.4
+
+```{r}
+election_fill %>%
+  select(FIPS, county, year, income) %>%
+  slice(7293:7312)
+```
+
+### 1.3 Feature engineering
+
+#### 1.3.1 
+
+A row represent one county in one election year, identified by FIPS and year.
+
+
+#### 1.3.2
+
+```{r}
+election_fill %>%
+  filter(year == 2024, party %in% c("democrat", "republican")) %>%
+  select(FIPS, county, state, region, party, candidatevotes, population, LND010200D, income) %>%
+  pivot_wider(
+    names_from = party,
+    values_from = candidatevotes
+  ) %>%
+  mutate(win = if_else(democrat > republican, 1L, 0L))
+```
+
+#### 1.3.3
+
+```{r}
+election_fill %>%
+  filter(year == 2024, party %in% c("democrat", "republican")) %>%
+  select(FIPS, county, state, region, party, candidatevotes, population, LND010200D, income) %>%
+  pivot_wider(
+    names_from = party,
+    values_from = candidatevotes
+  ) %>%
+  mutate(win = if_else(democrat > republican, 1L, 0L)) %>%
+  mutate(density = population / LND010200D)
+```
+
+### 1.4 Check your work
+
+#### 1.4.1
+
+```{r}
+election_fill %>%
+  filter(year == 2024, party %in% c("democrat", "republican")) %>%
+  select(FIPS, county, state, region, party, candidatevotes, population, LND010200D, income) %>%
+  pivot_wider(
+    names_from = party,
+    values_from = candidatevotes
+  ) %>%
+  mutate(win = if_else(democrat > republican, 1L, 0L)) %>%
+  mutate(density = population / LND010200D) %>%
+  summarise(missing_win = sum(is.na(win)), missing_density = sum(is.na(density)), missing_income = sum(is.na(income)))
+```
+#### 1.4.2
+
+```{r}
+clean <- election_fill %>%
+  filter(year == 2024, party %in% c("democrat", "republican")) %>%
+  select(FIPS, county, state, region, party, candidatevotes, population, LND010200D, income) %>%
+  pivot_wider(
+    names_from = party,
+    values_from = candidatevotes
+  ) %>%
+  mutate(win = if_else(democrat > republican, 1L, 0L)) %>%
+  mutate(density = population / LND010200D) %>%
+  drop_na(win, density, income)
+clean
+```
+
+#### 1.4.3
+
+```{r}
+clean %>%
+  filter(is.finite(density))%>%
+  summarise(min_d = min(density), max_d = max(density), min_i = min(income), max_i = max(income))
+```
+```{r}
+final <- clean %>% 
+  filter(density > 0, density < 50000, income > 0)
+final
+```
+
+#### 1.4.4
+
+```{r}
+nrow(final)
+```
+
+#### 1.4.5
+```{r}
+final %>%
+  select(county, win, density, income) %>%
+  slice(1:10)
+```
+
+## 2 Compare differently distributed data
+
+### 2.1 Human Bdoeis
+
+#### 2.1.1
+
+Human height is a ratio scale variable, as any zero value is meaningful and it has a continous and positive measurement.
+
+#### 2.1.2
+
+```{r}
+height <- read_delim("data/fatherson.csv.bz2")
+height %>%
+  select(fheight)
+```
+
+#### 2.1.3
+
+```{r}
+height %>%
+    reframe(mean = mean(height$fheight), median = median(height$fheight), sd = sd(height$fheight), 
+            range = range(height$fheight))
+```
+The mean value is slightly smaller than the median, meaning that there is a small skewed but pretty much normally distributed. The standard deviation is a lot smaller than the mean, suggesting that most heights are close to the mean value.
+
+#### 2.1.4
+
+```{r}
+ggplot(height, aes(x = fheight)) +
+  geom_histogram(fill = "gray", col = "black", binwidth = 1) +
+  geom_vline(xintercept = mean(height$fheight), color = "blue") +
+  geom_vline(xintercept = median(height$fheight), color = "red")
+```
+
+#### 2.1.5
+
+The distribution is pretty much normal and symmetric and the mean and median value are close to each other.
+
+### 2.2 Financial transaction
+
+#### 2.2.1
+
+Transaction amount is a ratio scale variable as its zero value is meaningful. It is measured as continuous and non-negative quantity.
+
+#### 2.2.2
+
+```{r}
+transaction <- read_delim("data/account-transactions.csv.bz2")
+nrow(transaction)
+```
+
+```{r}
+transaction %>%
+ reframe(mean = mean(transaction$amount), median = median(transaction$amount), sd = sd(transaction$amount), range = range(transaction$amount))
+```
+The mean of the transaction value is larger relatively larger than the median, meaning that it is is right-skewed distribution. The standard deviation is larger than the mean, indicating the transaction amount has a large range.
+
+#### 2.2.3
+
+```{r}
+ggplot(transaction, aes(amount)) +
+  geom_histogram(fill = "gray", col = "black", binwidth = 0.1) +
+  geom_vline(xintercept = mean(transaction$amount), color = "blue") +
+  geom_vline(xintercept = median(transaction$amount), color = "red")
+```
+
+#### 2.2.4
+
+```{r}
+ggplot(transaction, aes(amount)) +
+  geom_histogram(fill = "gray", col = "black", binwidth = 0.1) +
+  geom_vline(xintercept = mean(transaction$amount), color = "blue") +
+  geom_vline(xintercept = median(transaction$amount), color = "red") +
+  scale_x_log10()
+```
+
+#### 2.2.5 
+
+The first histogram without the log-scale has a strong right skew but after using the log-scale, the distribution becomes more symmetric and normal, meaning that the transaction amount has a log-normal distribution.
+
+### 2.3 Human influence
+
+#### 2.3.1
+
+The number of citation is a ratio scale value and it is a discrete, non-negative variable.  
+
+#### 2.3.2
+
+```{r}
+citation <- read_delim("data/mag-30k-citations.csv.bz2")
+nrow(citation)
+```
+```{r}
+library(modeest)
+mode <- modeest::mlv(citation$citations, method="mfv")
+citation %>%
+ reframe(mean = mean(citation$citations), median = median(citation$citations), sd = sd(citation$citations), range = range(citation$citations), mode)
+```
+The mean value is much higher than the median, meaning that there is a right-skewed distribution. The standard deviation is much larger than the mean, hence the range of citation count is large. The mode indicates that the smaller citation counts is more common.
+
+#### 2.3.3
+
+```{r}
+ggplot(citation, aes(citation$citations)) +
+  geom_histogram(fill = "gray", col = "black", binwidth = 1)
+```
+
+The histogram is hard to read, It shows a right skewed toward 0, has an extreme long tail, and has power law distribution.
+
+#### 2.3.4 
+
+```{r}
+ggplot(citation, aes(citation$citations)) +
+  geom_histogram(fill = "gray", col = "black", binwidth = 0.1) +
+  scale_x_log10()
+
+ggplot(citation, aes(citation$citations)) +
+  geom_histogram(fill = "gray", col = "black", binwidth = 0.1) +
+  scale_x_log10() +
+  scale_y_log10()
+```
+
+With the log scale, it is much easier to read and interpret the value. The histogram looks more linear, suggesting power law distribution of the data.
+
+#### 2.3.5
+
+human bodies: It is more normally distributed, as the data relates to biological condition and have more nature condition.
+
+transaction: Has a strong right skewed at first and become normally distributed after using log-scale, suggesting a log-normal distribution. The data focuses more on economy condition.
+
+influence: Also has a strong right skewed but becomes a linear like histogram after using log-scale and log-log scale, showing a power law distribution. The data focuses more on the influence
+
+Overall, the result highlights the differences between the purpose of each data collection. 
+
+## 3 Functions of RV-s
+
+### 3.1 Theoretical questions 
+
+#### 3.1.1
+
+X = 0 p = 1/2
+X = 1 p = 1/3
+X = 2 p = 1/6
+
+EX = 0 x 1/2 + 1 x 1/3 + 2 x 1/6
+EX = 0 + 1/3 + 2/6
+EX = 2/3
+
+#### 3.1.2
+
+EX^2 = 0^2 x 1/2 + 1^2 x 1/3 + 2^2 x 1/6
+EX^2 = 0 + 1/3 + 4/6
+EX^2 = 1
+
+For a discrete RV, E[f(x)] = sum of f(x) x p(X = x). In this question f(x) = x^2, hence squared each x value and multiple it by the probability and add all together. 
+
+#### 3.1.3
+
+VarX = EX^2 - (EX)^2
+VarX = 1 - (2/3)^2
+VarX = 1 - 4/9
+VarX = 5/9
+
+#### 3.1.4
+
+E3X = 2 x 2/3
+
+Var3X = 3^2 x VarX
+Var3X = 9 x 5/9
+Var3x = 5
+
+### 3.2 Simulation 
+
+#### 3.2.1
+
+```{r}
+x <- sample(c(0, 1, 2), 10000, replace = TRUE, prob = c(1/2, 1/3, 1/6))
+hist(x, breaks = seq(0, 2, by = 0.05))
+```
+
+#### 3.2.2
+
+```{r}
+mean(x)
+mean(x^2)
+var(x)
+mean(3*x)
+var(3*x)
+```
+Yes, the values are close.
+
+
+#### How much time did you spend on this PS?
+around 7 hours

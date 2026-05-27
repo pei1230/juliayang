@@ -1,0 +1,234 @@
+---
+title: "PS07"
+author: "Julia Yang"
+date: "2026-03-16"
+output: html_document
+---
+
+## 1 Is COMPAS fair?
+
+### 1.1 
+```{r}
+library(tidyverse)
+
+compas <- read_delim("data/compas-score-data.csv.bz2")
+head(compas)
+```
+
+
+### 1.2
+```{r}
+compas2 <- compas %>%
+  filter(race %in% c("Caucasian", "African-American"))
+```
+
+### 1.3
+```{r}
+compas2 <- compas2 %>%
+  mutate(high_score = ifelse(decile_score >= 5, 1, 0))
+compas2
+```
+
+
+### 1.4
+#### a)
+```{r}
+compas2 %>%
+  group_by(high_score) %>%
+  summarise(recid_rate = mean(two_year_recid))
+```
+
+#### b)
+```{r}
+compas2 %>%
+  group_by(race) %>%
+  summarise(recid_rate = mean(two_year_recid))
+```
+
+
+### 1.5
+```{r}
+cm <- table(
+  Prediction = compas2$high_score,
+  Actual = compas2$two_year_recid
+)
+cm
+```
+The confusion matrix is used to compare the predictions made by COMPAS with the actual outcomes. The model is able to classify people correctly in most cases, as indicated by the number of true positives, 1602, and the number of true negatives, 1872.
+
+However, the model also makes some errors in classification. This is indicated by the number of false positives, 923, and the number of false negatives, 881.
+
+The model is able to classify people reasonably well but is not entirely accurate since it makes classification errors.
+
+### 1.6
+```{r}
+TN <- cm[1,1]
+FN <- cm[1,2]
+FP <- cm[2,1]
+TP <- cm[2,2]
+```
+
+```{r}
+(TP + TN) / sum(cm)
+
+FP / (FP + TN)
+
+FN / (FN + TP)
+
+TP / (TP + FP)
+
+TN / (TN + FN)
+```
+The confusion matrix indicates that the overall accuracy of the model is approximately 66%, meaning that two out of every three persons are classified correctly by the model. However, it also indicates a high number of wrong predictions.
+
+The most concerning mistake is related to the false negative rate, indicating that 35.5% of persons who actually reoffend are classified as low risks. This means that judges who use this model may end up releasing persons who are likely to commit another crime.
+
+From the defendants' point of view, approximately 33.0% of persons who do not reoffend are classified as high risks, relating to the false positive rate. This means that persons who do not pose a real threat to society may end up being given harsh treatment due to this model.
+
+Furthermore, the precision of 63.4% implies that out of those who are classified as high risks, 36.6% do not actually reoffend. On the other hand, a negative predictive value of 68.0% implies that 32.0% of those classified as low risks do reoffend.
+
+To summarize, this model makes considerable errors in both directions. Although it does offer valuable information, but due to a high percentage of false negatives as well as false positives, it is risky to make judgments purely on the COMPAS system.
+
+### 1.7
+
+I would be a careful about a judge relying on such tool to set guidelines for sentencing. The tool gives valuable predictive information and has a high accuracy rate of about 66%, but it also makes a large number of incorrect predictions. The false positive rate indicates that a large number of individuals who will not be committing a crime are classified as high risk and may be subjected to harsher sentencing, while the false negative rate indicates that individuals who will be committing a crime are classified as low risk and may be a danger to society.
+
+However, judges will have to use his or her experience and intuition in deciding a sentence without the use of such a tool. Intuition and experience may also be wrong and may vary from case to case. Therefore, algorithms may be better at making predictions than a human mind.
+
+In terms of the acceptable percentage of errors, I think the percentage should be low because the decisions have big impact on the lives of people. Nevertheless, there are always some errors. Hence, it is more important that the errors are not skewed towards one group.
+
+I do not think the acceptable percentage of errors for human judges and algorithms should be the same. I think the percentage for algorithms should be higher because they can be improved easily. Also, I think COMPAS should not be used as the sole determinant of decisions but as an assistant.
+
+## 2 Analysis by race
+
+### 2.1
+```{r}
+aa <- compas2 %>% filter(race == "African-American")
+ca <- compas2 %>% filter(race == "Caucasian")
+```
+
+```{r}
+cm_aa <- table(aa$high_score, aa$two_year_recid)
+cm_ca <- table(ca$high_score, ca$two_year_recid)
+
+cm_aa
+cm_ca
+```
+
+
+#### a)
+```{r}
+TN_aa <- cm_aa[1,1]
+FN_aa <- cm_aa[1,2]
+FP_aa <- cm_aa[2,1]
+TP_aa <- cm_aa[2,2]
+
+TN_ca <- cm_ca[1,1]
+FN_ca <- cm_ca[1,2]
+FP_ca <- cm_ca[2,1]
+TP_ca <- cm_ca[2,2]
+```
+
+```{r}
+one_minus_NPV_aa <- FN_aa / (TN_aa + FN_aa)
+one_minus_precision_aa <- FP_aa / (TP_aa + FP_aa)
+one_minus_NPV_aa
+one_minus_precision_aa
+
+one_minus_NPV_ca <- FN_ca / (TN_ca + FN_ca)
+one_minus_precision_ca <- FP_ca / (TP_ca + FP_ca)
+one_minus_NPV_ca
+one_minus_precision_ca
+```
+#### b)
+
+```{r}
+FPR_aa <- FP_aa / (FP_aa + TN_aa)
+FNR_aa <- FN_aa / (FN_aa + TP_aa)
+FPR_aa
+FNR_aa
+
+FPR_ca <- FP_ca / (FP_ca + TN_ca)
+FNR_ca <- FN_ca / (FN_ca + TP_ca)
+FPR_ca
+FNR_ca
+```
+
+### 2.2
+For African-Americans:
+1−NPV=0.351
+1−precision=0.350
+FPR = 0.423
+FNR = 0.285
+
+For Caucasians:
+1−NPV=0.290
+1−precision=0.405
+FPR = 0.220
+FNR = 0.496
+
+#### a)
+
+The measures 1−NPV and 1−precision describe the types of errors that are most important from a judge’s point of view. In this case, 1−NPV describes the proportion of individuals classified as low risk that end up committing a crime, which translates to a false sense of leniency for individuals that are a real threat to society. 
+
+On the other hand, 1−precision describes the proportion of individuals classified as high risk that end up not committing a crime, which translates to a false sense of harshness for individuals that are not a threat to society. 
+
+These measures are important because a judge will use this information in determining a sentence for a defendant.
+
+#### b)
+
+From the perspective of the non-recidivist individual, the assessment of fairness can be performed using the false positive rate, which is the probability that a non-recidivist individual is incorrectly classified as high risk.
+
+The value for African-Americans is 0.423 and value for Caucasians is 0.220. This means that African-American non-recidivists are almost twice as likely as Caucasians to be incorrectly classified as high risk.
+
+Based on this perspective, the system is unfair to African-Americans because they are likely to be treated harshly even though they have not committed any crimes.
+
+#### c)
+
+The non-recidivism rate for those classified as high risk will be the percentage of those classified as high risk that have not actually committed a crime, which is equivalent to false positive rates. A lower figure will mean that fewer incorrect harsh classifications were made.
+
+As the non-recidivism rate for African-Americans is lower than that for Caucasians, 35% < 41%. This means that fewer African-Americans are incorrectly labeled compared to Caucasians in the high risk classification. In this sense, it indicates that the model is fair to African-Americans.
+
+However, it does not necessarily mean that the model is fair overall. It has already been shown that from a false positive rate perspective, more African-Americans were incorrectly classified as high risk in general.
+
+
+## 3 Can you make a better model?
+
+### 3.1 
+Caucasians
+Total recidivists = 800
+Total people = 2100
+Results:
+Recidivism rate = 800 / 2100 = 0.381
+1−NPV=400/(1000+400)=0.286
+FPR = 300 / (300 + 1000) = 0.231
+
+African-Americans
+Total recidivists = 1700
+Total people = 3200
+Results:
+Recidivism rate = 1700 / 3200 = 0.531
+1−NPV=500/(900+500)=0.357
+FPR = 600 / (600 + 900) = 0.400
+
+### 3.2
+
+|               | R = 0 | R = 1 |
+|---------------|-------|-------|
+| Low risk      | 1100  | 400   |
+| High risk     | 400   | 1300  |
+
+FPR = 400 / (400 + 1100) = 0.267
+1−NPV=400/(1100+400)=0.267
+
+After adjusting the matrix value, results in an FPR of approximately 0.267 and 1−NPV=0.267, which are closer to the corresponding values for Caucasians. This demonstrates that it is possible to adjust the model to improve fairness across these metrics.
+
+### 3.3
+If we adjust the model to have similar values for FPR and NPV for the two groups, then the values for other parameters, such as precision and FNR, will also be affected. For instance, increasing the fairness in the system in terms of FPR may also increase the value for FNR. This means that the system may not be able to identify as many actual recidivists.
+
+Thus, it is clear that there is a trade-off between the values for different parameters. It is not possible to have optimal values for all parameters at the same time.
+
+Thus, the adjusted model is not necessarily better than the COMPAS model. It simply gives a higher weight to a different parameter for calculating the value for fairness. It is not possible to have perfect values for fairness in any system.
+
+#### how many hours did you spend on this PS.
+6 hours
