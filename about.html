@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <title>About - Julia Yang</title>
+</head>
+<body>
+    <header class="site-header">
+        <nav class="nav-container" aria-label="Main navigation">
+            <a class="logo" href="index.html">Julia Yang</a>
+            <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks">
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Home</a></li>
+                <li><a class="active" href="about.html">About</a></li>
+                <li><a href="work.html">Work</a></li>
+                <li><a href="documents/Julia_Yang_Resume.pdf" target="_blank">Resume</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="section page-section about-section">
+            <div class="section-heading">
+                <p class="eyebrow">About</p>
+                <h1 class="page-title">Curious, analytical, and design-minded.</h1>
+            </div>
+
+            <div class="about-grid">
+                <article class="about-story">
+                    <p>
+                        I’m a Data Science student at the University of Washington with a passion for creating solutions
+                        at the intersection of design and technology. My work blends brand identity, web development, and
+                        data analysis into responsive, user-friendly digital experiences.
+                    </p>
+                    <p>
+                        My journey spans from researching quantum computing optimization algorithms in Tokyo to designing
+                        and launching websites for boutique hotels. I enjoy turning complex ideas into clear interfaces and
+                        measurable outcomes.
+                    </p>
+                    <a href="documents/Julia_Yang_Resume.pdf" target="_blank" class="text-link">View Resume</a>
+                </article>
+
+                <aside class="info-stack">
+                    <div class="info-block">
+                        <h2>Skills</h2>
+                        <div class="skills">
+                            <span>Python</span>
+                            <span>HTML & CSS</span>
+                            <span>R</span>
+                            <span>Java</span>
+                            <span>UI/UX Design</span>
+                            <span>Figma</span>
+                            <span>WordPress</span>
+                            <span>Data Analysis</span>
+                        </div>
+                    </div>
+                    <div class="info-block">
+                        <h2>Education</h2>
+                        <p class="degree">B.S. in Informatics: Data Science</p>
+                        <p>University of Washington, June 2027</p>
+                        <p class="degree">Minor: Business Administration</p>
+                        <p>GPA: 3.7/4.0 • Dean's List</p>
+                    </div>
+                </aside>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>Let’s build something thoughtful together.</p>
+        <a href="mailto:yangpeirang10140@gmail.com">yangpeirang10140@gmail.com</a>
+        <p class="copyright">© 2026 Julia Yang. All rights reserved.</p>
+    </footer>
+
+    <script>
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelector('#navLinks');
+
+        menuToggle.addEventListener('click', () => {
+            const isOpen = navLinks.classList.toggle('active');
+            menuToggle.setAttribute('aria-expanded', String(isOpen));
+        });
+
+        navLinks.querySelectorAll('a').forEach((link) => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                menuToggle.setAttribute('aria-expanded', 'false');
+            });
+        });
+    </script>
+</body>
+</html>

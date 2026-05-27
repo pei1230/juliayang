@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <title>Work - Julia Yang</title>
+</head>
+<body>
+    <header class="site-header">
+        <nav class="nav-container" aria-label="Main navigation">
+            <a class="logo" href="index.html">Julia Yang</a>
+            <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks">
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a class="active" href="work.html">Work</a></li>
+                <li><a href="documents/Julia_Yang_Resume.pdf" target="_blank">Resume</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="section page-section work-section">
+            <div class="section-heading">
+                <p class="eyebrow">Selected Work</p>
+                <h1 class="page-title">Projects that connect research, design, and real users.</h1>
+            </div>
+
+            <div class="projects-grid">
+                <article class="project-card featured">
+                    <div class="project-media hotel-media">
+                        <span>Web Design</span>
+                    </div>
+                    <div class="project-content">
+                        <p class="project-kicker">Boutique Hotel Website</p>
+                        <h2>Almeria Hotel</h2>
+                        <p>Designed and launched a complete website for a 6-room boutique hotel, boosting customer base by 130% and attracting 5k+ visitors from domestic and international markets.</p>
+                        <div class="project-tags">
+                            <span>Web Design</span>
+                            <span>UI/UX</span>
+                            <span>WordPress</span>
+                        </div>
+                        <a href="https://almeria.co.jp/en/" target="_blank">View Project</a>
+                    </div>
+                </article>
+
+                <article class="project-card">
+                    <div class="project-media data-media">
+                        <span>Optimization</span>
+                    </div>
+                    <div class="project-content">
+                        <p class="project-kicker">Algorithm Research</p>
+                        <h2>TSP Optimization with Quantum Computing</h2>
+                        <p>Implemented 2-opt and genetic algorithms in Python to solve the Traveling Salesman Problem using Tokyo's railway network data.</p>
+                        <div class="project-tags">
+                            <span>Python</span>
+                            <span>Algorithm Design</span>
+                            <span>Data Analysis</span>
+                        </div>
+                        <a href="documents/Computer Science Traveling Salesman Problem.pdf">View Project</a>
+                    </div>
+                </article>
+
+                <article class="project-card">
+                    <div class="project-media audit-media">
+                        <span>Fairness Audit</span>
+                    </div>
+                    <div class="project-content">
+                        <p class="project-kicker">Responsible AI</p>
+                        <h2>COMPAS Algorithmic Fairness Audit</h2>
+                        <p>Conducted a fairness audit on the COMPAS recidivism prediction system using R and statistical analysis to evaluate racial disparities.</p>
+                        <div class="project-tags">
+                            <span>R</span>
+                            <span>Data Analysis</span>
+                            <span>Machine Learning</span>
+                        </div>
+                        <a href="Data Analysis/COMPAS-Algorithmic-Fairness-Audit.html" target="_blank">View Project</a>
+                    </div>
+                </article>
+
+                <article class="project-card">
+                    <div class="project-media election-media">
+                        <span>Prediction</span>
+                    </div>
+                    <div class="project-content">
+                        <p class="project-kicker">Statistical Modeling</p>
+                        <h2>U.S. Election Outcome Prediction</h2>
+                        <p>Built a logistic regression model in R to predict county-level Democratic election wins using demographic, education, income, and population data.</p>
+                        <div class="project-tags">
+                            <span>R</span>
+                            <span>Logistic Regression</span>
+                            <span>Data Analysis</span>
+                        </div>
+                        <a href="Data Analysis/U.S.-Election-Outcome-Prediction.html" target="_blank">View Project</a>
+                    </div>
+                </article>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>Let’s build something thoughtful together.</p>
+        <a href="mailto:yangpeirang10140@gmail.com">yangpeirang10140@gmail.com</a>
+        <p class="copyright">© 2026 Julia Yang. All rights reserved.</p>
+    </footer>
+
+    <script>
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelector('#navLinks');
+
+        menuToggle.addEventListener('click', () => {
+            const isOpen = navLinks.classList.toggle('active');
+            menuToggle.setAttribute('aria-expanded', String(isOpen));
+        });
+
+        navLinks.querySelectorAll('a').forEach((link) => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                menuToggle.setAttribute('aria-expanded', 'false');
+            });
+        });
+    </script>
+</body>
+</html>

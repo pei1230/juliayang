@@ -3,208 +3,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <title>Julia Yang - Portfolio</title>
 </head>
-<body>
-    <!-- Navigation -->
-    <nav>
-        <div class="nav-container">
-            <div class="logo">Julia Yang</div>
+<body class="home-page">
+    <header class="site-header">
+        <nav class="nav-container" aria-label="Main navigation">
+            <a class="logo" href="index.html">Julia Yang</a>
+            <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks">
+                <span></span>
+                <span></span>
+            </button>
             <ul class="nav-links" id="navLinks">
-                <li><a href="#" onclick="showSection('home')" class="active">Home</a></li>
-                <li><a href="#" onclick="showSection('about')">About</a></li>
-                <li><a href="#" onclick="showSection('work')">Work</a></li>
+                <li><a class="active" href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="work.html">Work</a></li>
+                <li><a href="documents/Julia_Yang_Resume.pdf" target="_blank">Resume</a></li>
             </ul>
-            <button class="menu-toggle" onclick="toggleMenu()">☰</button>
-        </div>
-    </nav>
+        </nav>
+    </header>
 
-    <!-- Home Section -->
-    <section id="home" class="active">
-        <div class="container">
-            <div class="profile-circle">JY</div>
-            <h1>Hello, I'm Julia Yang</h1>
-            <p class="subtitle">A data science student and web developer passionate about creating beautiful digital experiences through UI/UX design and data-driven solutions</p>
-            <div class="social-links">
-                <a href="https://github.com/pei1230" aria-label="GitHub">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
-                    </svg>
-                </a>
-                <a href="https://www.linkedin.com/in/julia-peirong-yang/" aria-label="LinkedIn">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
-                        <rect x="2" y="9" width="4" height="12"></rect>
-                        <circle cx="4" cy="4" r="2"></circle>
-                    </svg>
-                </a>
-                <a href="mailto:yangpeirang10140@gmail.com" aria-label="Email">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-                        <polyline points="22,6 12,13 2,6"></polyline>
-                    </svg>
-                </a>
+    <main>
+        <section class="hero">
+            <div class="hero-copy">
+                <p class="eyebrow">Data Science • UI/UX • Web Development</p>
+                <h1>Designs thoughtful digital experiences with data behind them.</h1>
+                <p class="hero-text">
+                    I'm an Informatics student at the University of Washington building at the intersection of visual design,
+                    product thinking, and applied data analysis.
+                </p>
+                <div class="hero-actions">
+                    <a class="btn primary" href="work.html">View Work</a>
+                    <a class="btn secondary" href="about.html">About Me</a>
+                </div>
+                <div class="social-links" aria-label="Social links">
+                    <a href="https://github.com/pei1230" target="_blank" aria-label="GitHub">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.44 5.44 0 0 0 3.5 8.55c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                        </svg>
+                    </a>
+                    <a href="https://www.linkedin.com/in/julia-peirong-yang/" target="_blank" aria-label="LinkedIn">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                            <rect x="2" y="9" width="4" height="12"></rect>
+                            <circle cx="4" cy="4" r="2"></circle>
+                        </svg>
+                    </a>
+                    <a href="mailto:yangpeirang10140@gmail.com" aria-label="Email">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                            <polyline points="22,6 12,13 2,6"></polyline>
+                        </svg>
+                    </a>
+                </div>
             </div>
-            <button class="btn" onclick="showSection('work')">View My Work</button>
-        </div>
-    </section>
-
-    <!-- About Section -->
-    <section id="about">
-        <div class="container">
-            <h2>About Me</h2>
-            <div class="about-content">
-                <!-- <div class="profile-pic">
-                    <img src="documents/profile.JPG">
-                </div> -->
-                <div class="about-right">
-                    <div class="about-skills">
-                    <h3>Skills</h3>
-                    <div class="skills">
-                        <span class="skill-tag">Python</span>
-                        <span class="skill-tag">HTML & CSS</span>
-                        <span class="skill-tag">R</span>
-                        <span class="skill-tag">Java</span>
-                        <span class="skill-tag">UI/UX Design</span>
-                        <span class="skill-tag">Figma</span>
-                        <span class="skill-tag">WordPress</span>
-                        <span class="skill-tag">Data Analysis</span>
-                    </div>
-                    <h3>Education</h3>
-                    <div class="education">
-                        <p class="degree">B.S. in Informatics: Data Science</p>
-                        <p class="university">University of Washington, June 2027</p>
-                        <p class="degree" style="margin-top: 0.5rem;">Minor: Business Administration</p>
-                        <p class="university">GPA: 3.7/4.0 • Dean's List</p>
-                    </div>
-                </div>
-                <div class="about-text">
-                    <p>I'm a Data Science student at the University of Washington with a passion for creating solutions at the intersection of design and technology. With experience in brand identity design, web development, and data analysis, I specialize in building responsive and user-friendly digital experiences.</p>
-                    <p>My journey spans from researching quantum computing optimization algorithms in Tokyo to designing and launching websites for boutique hotels. I thrive on combining technical problem-solving with creative visual design to deliver impactful results.</p>
-                </div>
-            
-                <a href="documents/Julia_Yang_Resume.pdf" target="_blank" class="resume-btn">
-                    View Resume
-                </a>
-
-            </div>
-        </div>
-    </section>
-
-    <!-- Work Section -->
-    <section id="work">
-        <div class="container">
-            <h2>My Work</h2>
-            <div class="projects-grid">
-                <div class="project-card">
-                    <div class="project-content">
-                        <h3 class="project-title">Almeria Hotel</h3>
-                        <p class="project-description">Designed and launched a complete website for a 6-room boutique hotel, boosting customer base by 130% and attracting 5k+ visitors from domestic and international markets.</p>
-                        <div class="project-tags">
-                            <span class="project-tag">Web Design</span>
-                            <span class="project-tag">UI/UX</span>
-                            <span class="project-tag">WordPress</span>
-                        </div>
-                        <a href="https://almeria.co.jp/en/" target="_blank" class="project-link">
-                            View Project →
-                        </a>
-                    </div>
-                </div>
-
-                <div class="project-card">
-                    <div class="project-content">
-                        <h3 class="project-title">TSP Optimization with Quantum Computing</h3>
-                        <p class="project-description">Implemented 2-opt and genetic algorithms in Python to solve the Traveling Salesman Problem using Tokyo's railway network data, analyzing convergence behavior and runtime efficiency.</p>
-                        <div class="project-tags">
-                            <span class="project-tag">Python</span>
-                            <span class="project-tag">Algorithm Design</span>
-                            <span class="project-tag">Data Analysis</span>
-                        </div>
-                        <a href="documents/Computer Science Traveling Salesman Problem.pdf" class="project-link">
-                            View Project →
-                        </a>
-                    </div>
-                </div>
-
-                <div class="project-card">
-                    <div class="project-content">
-                        <h3 class="project-title">COMPAS Algorithmic Fairness Audit</h3>
-
-                        <p class="project-description">
-                            Conducted a fairness audit on the COMPAS recidivism prediction system
-                            using R and statistical analysis to evaluate racial disparities in
-                            prediction outcomes.
-                        </p>
-
-                        <div class="project-tags">
-                            <span class="project-tag">R</span>
-                            <span class="project-tag">Data Analysis</span>
-                            <span class="project-tag">Machine Learning</span>
-                        </div>
-
-                        <a href="Data Analysis/COMPAS-Algorithmic-Fairness-Audit.html" class="project-link" target="_blank">
-                            View Project →
-                        </a>
-                    </div>
-                </div>
-
-                <div class="project-card">
-                    <div class="project-content">
-                        <h3 class="project-title">U.S. Election Outcome Prediction</h3>
-
-                        <p class="project-description">
-                            Built a logistic regression model in R to predict county-level
-                            Democratic election wins using demographic, education, income,
-                            and population data across the United States.
-                        </p>
-
-                        <div class="project-tags">
-                            <span class="project-tag">R</span>
-                            <span class="project-tag">Logistic Regression</span>
-                            <span class="project-tag">Data Analysis</span>
-                        </div>
-
-                        <a href="Data Analysis/U.S.-Election-Outcome-Prediction.html" class="project-link" target="_blank">
-                            View Project →
-                        </a>
-                    </div>
-                </div>
-
-            
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer>
-        <p>Let's work together</p>
-        <p class="copyright">© 2026 Julia Yang. All rights reserved.</p>
-    </footer>
+        </section>
+    </main>
 
     <script>
-        function showSection(sectionId) {
-            // Hide all sections
-            document.querySelectorAll('section').forEach(section => {
-                section.classList.remove('active');
-            });
-            
-            // Show selected section
-            document.getElementById(sectionId).classList.add('active');
-            
-            // Update active nav link
-            document.querySelectorAll('.nav-links a').forEach(link => {
-                link.classList.remove('active');
-            });
-            event.target.classList.add('active');
-            
-            // Close mobile menu
-            document.getElementById('navLinks').classList.remove('active');
-        }
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelector('#navLinks');
 
-        function toggleMenu() {
-            document.getElementById('navLinks').classList.toggle('active');
-        }
+        menuToggle.addEventListener('click', () => {
+            const isOpen = navLinks.classList.toggle('active');
+            menuToggle.setAttribute('aria-expanded', String(isOpen));
+        });
+
+        navLinks.querySelectorAll('a').forEach((link) => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                menuToggle.setAttribute('aria-expanded', 'false');
+            });
+        });
     </script>
 </body>
 </html>
