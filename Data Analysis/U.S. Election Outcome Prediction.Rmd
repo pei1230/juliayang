@@ -371,7 +371,3 @@ mean(3*x)
 var(3*x)
 ```
 Yes, the values are close.
-
-
-#### How much time did you spend on this PS?
-around 7 hours
